@@ -12,6 +12,7 @@
 .env
 .env.local
 .env.dev
+.air.toml
 
 # Compiler,system file
 .idea/
