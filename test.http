@@ -1,25 +1,54 @@
 ###
+// ReviewHandler
 GET http://localhost:8080/v1/todo
 Accept: application/json
 
 ###
+// CreateHandler
 POST http://localhost:8080/v1/todo
 Accept: application/json
 
 {
-    "Title":"打球",
+    "Title":"唱歌",
     "Status":false
 }
 
 ###
-PUT http://localhost:8080/v1/todo/1
+// UpdateHandler
+PUT http://localhost:8080/v1/todo/5
 Accept: application/json
 
 {
-    "Title":"吃饭",
-    "Status":true
+    "Title":"跳舞",
+    "Status":false
 }
 
 ###
-DELETE http://localhost:8080/v1/todo/2
+// DeleteHandler
+DELETE http://localhost:8080/v1/todo/4
+Accept: application/json
+
+###
+// ReviewRecycleHandler
+GET http://localhost:8080/v2/todo
+Accept: application/json
+
+###
+// RestoreAHandler
+PUT http://localhost:8080/v2/todo/3
+Accept: application/json
+
+###
+// RestoreAllHandler
+PUT http://localhost:8080/v2/todo
+Accept: application/json
+
+###
+// EmptyAllRecycleHandler
+PUT http://localhost:8080/v2/todo/empty
+Accept: application/json
+
+###
+// EmptyARecycleHandler
+PUT http://localhost:8080/v2/todo/3
 Accept: application/json
