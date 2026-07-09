@@ -3,9 +3,9 @@ package handler
 import (
 	"fmt"
 
-	"github.com/Leon1235532/Go_backend/common"
-	"github.com/Leon1235532/Go_backend/models"
-	"github.com/Leon1235532/Go_backend/schemas"
+	"github.com/Leon1235532/Bubble_Demo/common"
+	"github.com/Leon1235532/Bubble_Demo/models"
+	"github.com/Leon1235532/Bubble_Demo/schemas"
 	"github.com/gin-gonic/gin"
 )
 
@@ -54,7 +54,7 @@ func DeleteHandler(c *gin.Context) {
 	}
 	count, err := models.DeleteTodo(ids.IDs)
 	if err != nil {
-		common.ParameterError(c, err.Error())
+		common.ErrorResponse(c, err)
 		return
 	}
 	message := fmt.Sprintf("%d条待办事项已删除", count)

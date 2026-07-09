@@ -1,8 +1,8 @@
 package routers
 
 import (
-	"github.com/Leon1235532/Go_backend/handler"
-	"github.com/Leon1235532/Go_backend/setting"
+	"github.com/Leon1235532/Bubble_Demo/handler"
+	"github.com/Leon1235532/Bubble_Demo/setting"
 	"github.com/gin-gonic/gin"
 )
 

@@ -1,7 +1,7 @@
 package models
 
 import (
-	"github.com/Leon1235532/Go_backend/dao"
+	"github.com/Leon1235532/Bubble_Demo/dao"
 	"gorm.io/gorm"
 )
 

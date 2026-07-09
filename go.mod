@@ -1,4 +1,4 @@
-module github.com/Leon1235532/Go_backend
+module github.com/Leon1235532/Bubble_Demo
 
 go 1.26.4
 

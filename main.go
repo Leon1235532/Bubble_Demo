@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/Leon1235532/Go_backend/dao"
-	"github.com/Leon1235532/Go_backend/models"
-	"github.com/Leon1235532/Go_backend/routers"
-	"github.com/Leon1235532/Go_backend/setting"
+	"github.com/Leon1235532/Bubble_Demo/dao"
+	"github.com/Leon1235532/Bubble_Demo/models"
+	"github.com/Leon1235532/Bubble_Demo/routers"
+	"github.com/Leon1235532/Bubble_Demo/setting"
 )
 
 const FilePath = "./config/config.ini"
@@ -28,5 +28,4 @@ func main() {
 	if err := r.Run(fmt.Sprintf(":%d", setting.Conf.Port)); err != nil {
 		log.Fatalf("router register failed: %#v", err.Error())
 	}
-	r.Run()
 }
