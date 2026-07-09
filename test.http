@@ -9,8 +9,8 @@ POST http://localhost:8080/v1/todo
 Accept: application/json
 
 {
-    "Title":"唱歌",
-    "Status":false
+    "Title":"哒哒",
+    "Status":true
 }
 
 ###
@@ -19,14 +19,18 @@ PUT http://localhost:8080/v1/todo/5
 Accept: application/json
 
 {
-    "Title":"跳舞",
+    "Title":"上网",
     "Status":false
 }
 
 ###
 // DeleteHandler
-DELETE http://localhost:8080/v1/todo/4
+DELETE http://localhost:8080/v1/todo/delete
 Accept: application/json
+
+{
+    "ids":[5,9]
+}
 
 ###
 // ReviewRecycleHandler
@@ -50,5 +54,9 @@ Accept: application/json
 
 ###
 // EmptyARecycleHandler
-PUT http://localhost:8080/v2/todo/3
+PUT http://localhost:8080/v2/todo/empty/delete
 Accept: application/json
+
+{
+    "ids":[5,9]
+}

@@ -2,9 +2,10 @@ package handler
 
 import (
 	"fmt"
-	"net/http"
 
+	"github.com/Leon1235532/Go_backend/common"
 	"github.com/Leon1235532/Go_backend/models"
+	"github.com/Leon1235532/Go_backend/schemas"
 	"github.com/gin-gonic/gin"
 )
 
@@ -25,166 +26,113 @@ url     --> handler  --> logic   -->    model
 func CreateHandler(c *gin.Context) {
 	var todo models.Todo
 	if err := c.ShouldBindJSON(&todo); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		common.ParameterError(c, err.Error())
 		return
 	}
 	err := models.CreateTodo(todo)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"code":  500,
-			"msg":   "failed",
-			"error": err,
-		})
+		common.ErrorResponse(c, err)
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{
-		"code": 200,
-		"msg":  "success",
-		"data": todo,
-	})
-
+	common.SuccessRespData(c, "", todo)
 }
 
 func ReviewHandler(c *gin.Context) {
 	todolist, err := models.ReviewTodo()
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"code":  500,
-			"msg":   "failed",
-			"error": err,
-		})
+		common.ErrorResponse(c, err)
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{
-		"code": 500,
-		"msg":  "success",
-		"data": todolist,
-	})
+	common.SuccessRespData(c, "", todolist)
 }
 
 func DeleteHandler(c *gin.Context) {
-	id, ok := c.Params.Get("id")
-	if !ok {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "无效的id!"})
+	var ids schemas.IDsPara
+	if err := c.ShouldBindJSON(&ids); err != nil {
+		common.ParameterError(c, err.Error())
 		return
 	}
-	if err := models.DeleteTodo(id); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	count, err := models.DeleteTodo(ids.IDs)
+	if err != nil {
+		common.ParameterError(c, err.Error())
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{
-		"code": 200,
-		"msg":  "id:" + id + " deleted",
-	})
-
+	message := fmt.Sprintf("%d条待办事项已删除", count)
+	common.SuccessRespData(c, message, models.Todo{})
 }
 
 func UpdateHandler(c *gin.Context) {
 	id, ok := c.Params.Get("id")
 	if !ok {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "无效的id!"})
+		common.ParameterError(c, common.IdErrMsg)
 		return
 	}
 	var todo models.Todo
 	if err := c.ShouldBindJSON(&todo); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		common.ParameterError(c, err.Error())
 		return
 	}
 	if err := models.UpdateTodo(id, todo); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		common.ParameterError(c, err.Error())
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{
-		"code": 200,
-		"msg":  "success",
-		"data": todo})
+	common.SuccessRespData(c, "", todo)
 }
 
 func RestoreAHandler(c *gin.Context) {
 	id, ok := c.Params.Get("id")
 	if !ok {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "无效的id!"})
+		common.ParameterError(c, common.IdErrMsg)
 		return
 	}
 	if err := models.RestoreATodo(id); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"code":  500,
-			"msg":   "failed",
-			"error": err.Error(),
-		})
+		common.ErrorResponse(c, err)
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{
-		"code": 200,
-		"msg":  "id:" + id + " restored",
-	})
+	message := "id:" + id + " restored"
+	common.SuccessRespData(c, message, models.Todo{})
 }
 
 func RestoreAllHandler(c *gin.Context) {
 	count, err := models.RestoreAllTodo()
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		common.ParameterError(c, err.Error())
 		return
 	}
 	message := fmt.Sprintf("%d个待办事项已恢复!", count)
-	c.JSON(http.StatusOK, gin.H{
-		"code": 200,
-		"msg":  message,
-	})
+	common.SuccessRespData(c, message, models.Todo{})
 }
 
 func ReviewRecycleHandler(c *gin.Context) {
 	count, list, err := models.ReviewRecycle()
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"code":  500,
-			"msg":   "failed",
-			"error": err.Error(),
-		})
+		common.ErrorResponse(c, err)
 		return
 	}
-	total := fmt.Sprintf("回收站中共%d条数据", count)
-	c.JSON(http.StatusOK, gin.H{
-		"code":  200,
-		"msg":   "success",
-		"total": total,
-		"data":  list,
-	})
+	message := fmt.Sprintf("回收站中共%d条数据", count)
+	common.SuccessRespData(c, message, list)
 }
 
 func EmptyAllRecycleHandler(c *gin.Context) {
 	count, err := models.EmptyAllRecycle()
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"code":  500,
-			"msg":   "failed",
-			"error": err.Error(),
-		})
+		common.ErrorResponse(c, err)
 		return
 	}
-	total := fmt.Sprintf("已彻底删除%d条数据", count)
-	c.JSON(http.StatusOK, gin.H{
-		"code":  200,
-		"msg":   "success",
-		"total": total,
-	})
+	message := fmt.Sprintf("已彻底删除%d条数据", count)
+	common.SuccessRespData(c, message, models.Todo{})
 }
 
 func EmptyARecycleHandler(c *gin.Context) {
-	id, ok := c.Params.Get("id")
-	if !ok {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "无效的id!"})
+	var ids schemas.IDsPara
+	if err := c.ShouldBindJSON(&ids); err != nil {
+		common.ParameterError(c, err.Error())
+	}
+	count, err := models.EmptyARecycle(ids.IDs)
+	if err != nil {
+		common.ErrorResponse(c, err)
 		return
 	}
-	if err := models.EmptyARecycle(id); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"code":  500,
-			"msg":   "failed",
-			"error": err.Error(),
-		})
-	}
-	c.JSON(http.StatusOK, gin.H{
-		"code": 200,
-		"msg":  "id:" + id + " emptied",
-	})
+	message := fmt.Sprintf("已彻底删除%d条数据", count)
+	common.SuccessRespData(c, message, models.Todo{})
 }

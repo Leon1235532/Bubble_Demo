@@ -16,7 +16,7 @@ func SetupRouter() *gin.Engine {
 		v1group.POST("/todo", handler.CreateHandler)
 		v1group.PUT("/todo/:id", handler.UpdateHandler)
 		v1group.GET("/todo", handler.ReviewHandler)
-		v1group.DELETE("/todo/:id", handler.DeleteHandler)
+		v1group.DELETE("/todo/delete", handler.DeleteHandler)
 	}
 	v2group := r.Group("v2")
 	{
@@ -24,7 +24,7 @@ func SetupRouter() *gin.Engine {
 		v2group.PUT("/todo/:id", handler.RestoreAHandler)
 		v2group.PUT("/todo", handler.RestoreAllHandler)
 		v2group.PUT("/todo/empty", handler.EmptyAllRecycleHandler)
-		v2group.PUT("/todo/empty/:id", handler.EmptyARecycleHandler)
+		v2group.PUT("/todo/empty/delete", handler.EmptyARecycleHandler)
 	}
 	return r
 }

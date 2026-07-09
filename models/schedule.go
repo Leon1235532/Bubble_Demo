@@ -7,8 +7,8 @@ import (
 
 type Todo struct {
 	gorm.Model
-	Title  string `gorm:"NOT NULL"`
-	Status bool   `gorm:"DEFAULT='false'"`
+	Title  string `gorm:"NOT NULL" json:"title"`
+	Status bool   `gorm:"DEFAULT='false'" json:"status"`
 }
 
 // CRUD
@@ -29,8 +29,12 @@ func UpdateTodo(id string, todo Todo) (err error) {
 	return
 }
 
-func DeleteTodo(id string) (err error) {
-	err = dao.DB.Where("id = ?", id).Delete(&Todo{}).Error
+func DeleteTodo(ids []uint64) (count int64, err error) {
+	res := dao.DB.Where("id IN ?", ids).Delete(&Todo{})
+	if res.Error != nil {
+		return 0, res.Error
+	}
+	count = res.RowsAffected
 	return
 }
 
@@ -45,44 +49,48 @@ func RestoreATodo(id string) (err error) {
 }
 
 func ReviewRecycle() (count int64, todolist []Todo, err error) {
-	result := dao.DB.Unscoped().
+	res := dao.DB.Unscoped().
 		Where("deleted_at IS NOT NULL").
 		Order("ID asc").
 		Find(&todolist)
-	if result.Error != nil {
-		return 0, []Todo{}, err
+	if res.Error != nil {
+		return 0, []Todo{}, res.Error
 	}
-	count = result.RowsAffected
+	count = res.RowsAffected
 	return
 }
 
 func RestoreAllTodo() (count int64, err error) {
-	result := dao.DB.Unscoped().Model(&Todo{}).
+	res := dao.DB.Unscoped().Model(&Todo{}).
 		Where("deleted_at IS NOT NULL").
 		Updates(map[string]any{
 			"deleted_at": nil,
 		})
-	if err = result.Error; err != nil {
-		return 0, err
+	if err = res.Error; err != nil {
+		return 0, res.Error
 	}
-	count = result.RowsAffected
+	count = res.RowsAffected
 	return
 }
 
 func EmptyAllRecycle() (count int64, err error) {
-	result := dao.DB.Unscoped().
+	res := dao.DB.Unscoped().
 		Where("deleted_at IS NOT NULL").
 		Delete(&Todo{})
-	if result.Error != nil {
-		return 0, err
+	if res.Error != nil {
+		return 0, res.Error
 	}
-	count = result.RowsAffected
+	count = res.RowsAffected
 	return
 }
 
-func EmptyARecycle(id string) (err error) {
-	err = dao.DB.Unscoped().
-		Where("id =? AND deleted_at IS NOT NULL", id).
-		Delete(&Todo{}).Error
+func EmptyARecycle(ids []uint64) (count int64, err error) {
+	res := dao.DB.Unscoped().
+		Where("id IN ? AND deleted_at IS NOT NULL", ids).
+		Delete(&Todo{})
+	if res.Error != nil {
+		return 0, res.Error
+	}
+	count = res.RowsAffected
 	return
 }
