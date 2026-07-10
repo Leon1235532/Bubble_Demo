@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/Leon1235532/Bubble_Demo/common"
+	"github.com/Leon1235532/Bubble_Demo/dao"
 	"github.com/Leon1235532/Bubble_Demo/models"
 	"github.com/Leon1235532/Bubble_Demo/schemas"
 	"github.com/gin-gonic/gin"
@@ -29,7 +30,7 @@ func CreateHandler(c *gin.Context) {
 		common.ParameterError(c, err.Error())
 		return
 	}
-	err := models.CreateTodo(todo)
+	err := dao.CreateTodo(todo)
 	if err != nil {
 		common.ErrorResponse(c, err)
 		return
@@ -38,7 +39,7 @@ func CreateHandler(c *gin.Context) {
 }
 
 func ReviewHandler(c *gin.Context) {
-	todolist, err := models.ReviewTodo()
+	todolist, err := dao.ReviewTodo()
 	if err != nil {
 		common.ErrorResponse(c, err)
 		return
@@ -52,12 +53,17 @@ func DeleteHandler(c *gin.Context) {
 		common.ParameterError(c, err.Error())
 		return
 	}
-	count, err := models.DeleteTodo(ids.IDs)
+	count, err := dao.DeleteTodo(ids.IDs)
 	if err != nil {
 		common.ErrorResponse(c, err)
 		return
 	}
-	message := fmt.Sprintf("%d条待办事项已删除", count)
+	var message string
+	if count == 0 {
+		message = "未查到所选数据,无法删除!"
+	} else {
+		message = fmt.Sprintf("%d条待办事项已删除", count)
+	}
 	common.SuccessRespData(c, message, models.Todo{})
 }
 
@@ -72,7 +78,7 @@ func UpdateHandler(c *gin.Context) {
 		common.ParameterError(c, err.Error())
 		return
 	}
-	if err := models.UpdateTodo(id, todo); err != nil {
+	if err := dao.UpdateTodo(id, todo); err != nil {
 		common.ParameterError(c, err.Error())
 		return
 	}
@@ -85,7 +91,7 @@ func RestoreAHandler(c *gin.Context) {
 		common.ParameterError(c, common.IdErrMsg)
 		return
 	}
-	if err := models.RestoreATodo(id); err != nil {
+	if err := dao.RestoreATodo(id); err != nil {
 		common.ErrorResponse(c, err)
 		return
 	}
@@ -94,7 +100,7 @@ func RestoreAHandler(c *gin.Context) {
 }
 
 func RestoreAllHandler(c *gin.Context) {
-	count, err := models.RestoreAllTodo()
+	count, err := dao.RestoreAllTodo()
 	if err != nil {
 		common.ParameterError(c, err.Error())
 		return
@@ -104,7 +110,7 @@ func RestoreAllHandler(c *gin.Context) {
 }
 
 func ReviewRecycleHandler(c *gin.Context) {
-	count, list, err := models.ReviewRecycle()
+	count, list, err := dao.ReviewRecycle()
 	if err != nil {
 		common.ErrorResponse(c, err)
 		return
@@ -114,7 +120,7 @@ func ReviewRecycleHandler(c *gin.Context) {
 }
 
 func EmptyAllRecycleHandler(c *gin.Context) {
-	count, err := models.EmptyAllRecycle()
+	count, err := dao.EmptyAllRecycle()
 	if err != nil {
 		common.ErrorResponse(c, err)
 		return
@@ -128,11 +134,16 @@ func EmptyARecycleHandler(c *gin.Context) {
 	if err := c.ShouldBindJSON(&ids); err != nil {
 		common.ParameterError(c, err.Error())
 	}
-	count, err := models.EmptyARecycle(ids.IDs)
+	count, err := dao.EmptyARecycle(ids.IDs)
 	if err != nil {
 		common.ErrorResponse(c, err)
 		return
 	}
-	message := fmt.Sprintf("已彻底删除%d条数据", count)
+	var message string
+	if count == 0 {
+		message = "所选数据均不在回收站，无需删除!"
+	} else {
+		message = fmt.Sprintf("共彻底删除%d条回收站数据", count)
+	}
 	common.SuccessRespData(c, message, models.Todo{})
 }
