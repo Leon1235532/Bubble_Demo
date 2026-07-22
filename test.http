@@ -1,62 +1,72 @@
 ###
-// ReviewHandler
-GET http://localhost:8080/v1/todo
-Accept: application/json
-
-###
-// CreateHandler
-POST http://localhost:8080/v1/todo
+//review
+POST http://127.0.0.1:8080/v1/todo/review
 Accept: application/json
 
 {
-    "Title":"哒哒",
-    "Status":true
+    "page":2
 }
 
 ###
-// UpdateHandler
-PUT http://localhost:8080/v1/todo/5
+//create
+POST http://127.0.0.1:8080/v1/todo
 Accept: application/json
 
 {
-    "Title":"上网",
-    "Status":false
+    "title":"健身",
+    "status":true
 }
 
 ###
-// DeleteHandler
-DELETE http://localhost:8080/v1/todo/delete
+//update
+PUT  http://127.0.0.1:8080/v1/todo/2
+Accept: application/json
+
+{   
+    "title":"dance"
+}
+
+###
+DELETE http://127.0.0.1:8080/v1/todo/delete
 Accept: application/json
 
 {
-    "ids":[5,9]
+    "ids":[7,9]
 }
 
 ###
-// ReviewRecycleHandler
-GET http://localhost:8080/v2/todo
-Accept: application/json
-
-###
-// RestoreAHandler
-PUT http://localhost:8080/v2/todo/3
-Accept: application/json
-
-###
-// RestoreAllHandler
-PUT http://localhost:8080/v2/todo
-Accept: application/json
-
-###
-// EmptyAllRecycleHandler
-PUT http://localhost:8080/v2/todo/empty
-Accept: application/json
-
-###
-// EmptyARecycleHandler
-PUT http://localhost:8080/v2/todo/empty/delete
+//review recycle
+POST http://127.0.0.1:8080/v2/todo/review
 Accept: application/json
 
 {
-    "ids":[5,9]
+    "page":2
 }
+
+###
+//restore little recycle
+PUT http://127.0.0.1:8080/v2/todo/recycle
+Accept: application/json
+
+{
+    "ids":[4]
+}
+
+###
+//restore all recycle
+PUT http://127.0.0.1:8080/v2/todo/recycle/all
+Accept: application/json
+
+###
+//empty little recycle
+DELETE  http://127.0.0.1:8080/v2/todo/empty
+Accept: application/json
+
+{
+    "ids":[8]
+}
+
+###
+//empty all recycle
+DELETE  http://127.0.0.1:8080/v2/todo/empty/all
+Accept: application/json

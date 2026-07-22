@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/Leon1235532/Bubble_Demo/setting"
+	"github.com/Leon1235532/test/setting"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -14,24 +14,19 @@ var (
 )
 
 func InitDB(cfg *setting.MySQLConfig) (err error) {
-	dns := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local",
-		cfg.User, cfg.Password, cfg.Host, cfg.Port, cfg.DB)
-	DB, err = gorm.Open(mysql.Open(dns), &gorm.Config{})
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local", cfg.User, cfg.Password, cfg.Host, cfg.Port, cfg.DB)
+	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
-		return
-	} else {
-		sqlDB, err := DB.DB()
-		if err != nil {
-			return err
-		}
-		return sqlDB.Ping()
+		log.Fatalf("数据库连接失败：%v", err)
 	}
+	return
 }
 
-func Close() {
+func Close() (err error) {
 	sqlDB, err := DB.DB()
 	if err != nil {
-		log.Fatalf("数据库关闭失败：%#v", err)
+		panic(err)
 	}
 	sqlDB.Close()
+	return
 }

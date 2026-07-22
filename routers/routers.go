@@ -1,8 +1,8 @@
 package routers
 
 import (
-	"github.com/Leon1235532/Bubble_Demo/handler"
-	"github.com/Leon1235532/Bubble_Demo/setting"
+	"github.com/Leon1235532/test/handlers"
+	"github.com/Leon1235532/test/setting"
 	"github.com/gin-gonic/gin"
 )
 
@@ -11,20 +11,22 @@ func SetupRouter() *gin.Engine {
 		gin.SetMode(gin.ReleaseMode)
 	}
 	r := gin.Default()
-	v1group := r.Group("v1")
+	// CRUD router
+	v1 := r.Group("/v1")
 	{
-		v1group.POST("/todo", handler.CreateHandler)
-		v1group.PUT("/todo/:id", handler.UpdateHandler)
-		v1group.GET("/todo", handler.ReviewHandler)
-		v1group.DELETE("/todo/delete", handler.DeleteHandler)
+		v1.POST("/todo/review", handlers.ReviewHandler)
+		v1.POST("/todo", handlers.CreateHandler)
+		v1.PUT("/todo/:id", handlers.UpdateHandler)
+		v1.DELETE("/todo/delete", handlers.DeleteHandler)
 	}
-	v2group := r.Group("v2")
+	// Restore & Empty
+	v2 := r.Group("/v2")
 	{
-		v2group.GET("/todo", handler.ReviewRecycleHandler)
-		v2group.PUT("/todo/:id", handler.RestoreAHandler)
-		v2group.PUT("/todo", handler.RestoreAllHandler)
-		v2group.PUT("/todo/empty", handler.EmptyAllRecycleHandler)
-		v2group.PUT("/todo/empty/delete", handler.EmptyARecycleHandler)
+		v2.POST("/todo/review", handlers.ReviewRecyHandler)
+		v2.PUT("/todo/recycle", handlers.RtorRecyHandler)
+		v2.PUT("/todo/recycle/all", handlers.RtorAllRecHandler)
+		v2.DELETE("/todo/empty", handlers.EmptyRecyHandler)
+		v2.DELETE("/todo/empty/all", handlers.EmptyAllRecyHandler)
 	}
 	return r
 }

@@ -1,11 +1,11 @@
 package common
 
 const (
-	HTTPOk        = 200
-	HTTPErrParam  = 400
-	HTTPErrServer = 500
+	HttpOk        = 200
+	HttpErrPara   = 400
+	HttpErrServer = 500
 	IdErrMsg      = "无效的id"
-	MsgParamErr   = "参数错误"
-	FailMsg       = "failed"
-	SuccessMsg    = "success"
+	SucMsg        = "success"
+	ParaErrMsg    = "接收参数错误"
+	FailMsg       = "interserver failed"
 )

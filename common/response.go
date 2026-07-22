@@ -6,55 +6,38 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type ErrRes struct {
+type SuccessCode struct {
+	Code int64  `json:"code"`
+	Data any    `json:"data"`
+	Msg  string `json:"msg"`
+}
+
+type ErrCode struct {
 	Code int64  `json:"code"`
 	Msg  string `json:"msg"`
 	Err  string `json:"err"`
 }
 
-type SuccessRes struct {
-	Code int64  `json:"code"`
-	Msg  string `json:"msg"`
-	Data any    `json:"data"`
-}
-
-type ParaRes struct {
-	Code int64  `json:"code"`
-	Msg  string `json:"msg"`
-	Err  any    `json:"err"`
-}
-
-func ErrorResponse(c *gin.Context, err error) {
-	res := ErrRes{
-		Code: HTTPErrServer,
-		Msg:  FailMsg,
-	}
-	if err != nil {
-		res.Err = err.Error()
-	}
-	c.JSON(http.StatusInternalServerError, res)
-	c.Abort()
-}
-
-func SuccessRespData(c *gin.Context, msg string, data any) {
+func SucessResponse(c *gin.Context, msg string, data any) {
 	if msg == "" {
-		msg = SuccessMsg
+		msg = SucMsg
 	}
-	res := SuccessRes{
-		Code: HTTPOk,
-		Msg:  msg,
+	res := SuccessCode{
+		Code: HttpOk,
 		Data: data,
+		Msg:  msg,
 	}
 	c.JSON(http.StatusOK, res)
 }
 
-func ParameterError(c *gin.Context, err any) {
-	res := ParaRes{
-		Code: HTTPErrParam,
-		Msg:  MsgParamErr,
+func ErrorResponse(c *gin.Context, msg string, err string) {
+	if msg == "" {
+		msg = FailMsg
 	}
-	if err != nil {
-		res.Err = err
+	res := ErrCode{
+		Code: HttpErrPara,
+		Msg:  msg,
+		Err:  err,
 	}
 	c.JSON(http.StatusBadRequest, res)
 	c.Abort()
