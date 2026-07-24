@@ -3,10 +3,10 @@ package handlers
 import (
 	"fmt"
 
-	"github.com/Leon1235532/test/common"
-	"github.com/Leon1235532/test/dao"
-	"github.com/Leon1235532/test/models"
-	"github.com/Leon1235532/test/schemas"
+	"github.com/Leon1235532/Bubble_Demo/common"
+	"github.com/Leon1235532/Bubble_Demo/dao"
+	"github.com/Leon1235532/Bubble_Demo/models"
+	"github.com/Leon1235532/Bubble_Demo/schemas"
 	"github.com/gin-gonic/gin"
 )
 

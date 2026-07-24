@@ -29,7 +29,7 @@ func Init(file string) error {
 	if err != nil {
 		return err
 	}
-	Conf.MySQLConfig.User = os.Getenv("MYSQL_USER")
-	Conf.MySQLConfig.Password = os.Getenv("MYSQL_PASSWORD")
+	Conf.User = os.Getenv("MYSQL_USER")
+	Conf.Password = os.Getenv("MYSQL_PASSWORD")
 	return nil
 }

@@ -1,8 +1,8 @@
 package routers
 
 import (
-	"github.com/Leon1235532/test/handlers"
-	"github.com/Leon1235532/test/setting"
+	"github.com/Leon1235532/Bubble_Demo/handlers"
+	"github.com/Leon1235532/Bubble_Demo/setting"
 	"github.com/gin-gonic/gin"
 )
 
