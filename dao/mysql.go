@@ -15,6 +15,7 @@ var (
 
 func InitDB(cfg *setting.MySQLConfig) (err error) {
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local", cfg.User, cfg.Password, cfg.Host, cfg.Port, cfg.DB)
+	//gorm.Config为全局配置结构体，可以配置grom运行行为，不写则按默认
 	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatalf("数据库连接失败：%v", err)

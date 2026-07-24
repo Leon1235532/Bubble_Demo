@@ -33,7 +33,7 @@ func UpdateHandler(c *gin.Context) {
 		return
 	}
 	if err := c.ShouldBindJSON(&todo); err != nil {
-		common.ErrorResponse(c, common.IdErrMsg, err.Error())
+		common.ErrorResponse(c, common.ParaErrMsg, err.Error())
 		return
 	}
 	if err := dao.UpdateTodo(id, &todo); err != nil {
