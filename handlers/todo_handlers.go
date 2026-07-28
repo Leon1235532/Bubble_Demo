@@ -18,6 +18,7 @@ func CreateHandler(c *gin.Context) {
 		common.ErrorResponse(c, common.ParaErrMsg, err.Error())
 		return
 	}
+	todo.UID = c.GetUint("userid")
 	if err := dao.CreateTodo(&todo); err != nil {
 		common.ErrorResponse(c, "", err.Error())
 		return
@@ -36,7 +37,8 @@ func UpdateHandler(c *gin.Context) {
 		common.ErrorResponse(c, common.ParaErrMsg, err.Error())
 		return
 	}
-	if err := dao.UpdateTodo(id, &todo); err != nil {
+	todo.UID = c.GetUint("userid")
+	if err := dao.UpdateTodo(todo.UID, id, &todo); err != nil {
 		common.ErrorResponse(c, "", err.Error())
 		return
 	}
@@ -45,6 +47,7 @@ func UpdateHandler(c *gin.Context) {
 
 func ReviewHandler(c *gin.Context) {
 	var (
+		uid        uint
 		todolist   []models.Todo
 		totalpages uint64
 		divipage   schemas.Pagination
@@ -54,26 +57,38 @@ func ReviewHandler(c *gin.Context) {
 		common.ErrorResponse(c, common.ParaErrMsg, err.Error())
 		return
 	}
-	todolist, totalpages, err = dao.ReviewTodo(&divipage)
-	message := fmt.Sprintf("共%d页,现第%d页", totalpages, divipage.Page)
-	common.ResSuccMsgJson(c, message, todolist, err)
+	uid = c.GetUint("userid")
+	todolist, totalpages, err = dao.ReviewTodo(uid, &divipage)
+	message := fmt.Sprintf("第%d页,共%d页", divipage.Page, totalpages)
+	if err != nil {
+		common.ErrorResponse(c, "", err.Error())
+		return
+	}
+	common.SucessResponse(c, message, todolist)
 }
 
 func DeleteHandler(c *gin.Context) {
+	var uid uint
 	ids := new(schemas.IDsPara)
 	if err := c.ShouldBindJSON(ids); err != nil {
 		common.ErrorResponse(c, common.ParaErrMsg, err.Error())
 		return
 	}
-	count, err := dao.DeleteTodo(ids)
+	uid = c.GetUint("userid")
+	count, err := dao.DeleteTodo(uid, ids)
 	message := fmt.Sprintf("共软删除%d条数据", count)
-	common.ResSuccMsgJson(c, message, nil, err)
+	if err != nil {
+		common.ErrorResponse(c, "", err.Error())
+		return
+	}
+	common.SucessResponse(c, message, nil)
 }
 
 // Restore Recycle
 
 func ReviewRecyHandler(c *gin.Context) {
 	var (
+		uid        uint
 		todolist   []models.Todo
 		totalpages uint64
 		divipage   schemas.Pagination
@@ -83,41 +98,70 @@ func ReviewRecyHandler(c *gin.Context) {
 		common.ErrorResponse(c, common.ParaErrMsg, err.Error())
 		return
 	}
-	todolist, totalpages, err = dao.ReviewRecycle(&divipage)
-	message := fmt.Sprintf("共%d页,现第%d页", totalpages, divipage.Page)
-	common.ResSuccMsgJson(c, message, todolist, err)
+	uid = c.GetUint("userid")
+	todolist, totalpages, err = dao.ReviewRecycle(uid, &divipage)
+	message := fmt.Sprintf("第%d页,共%d页", divipage.Page, totalpages)
+	if err != nil {
+		common.ErrorResponse(c, "", err.Error())
+		return
+	}
+	common.SucessResponse(c, message, todolist)
 }
 
 func RtorRecyHandler(c *gin.Context) {
+	var uid uint
 	ids := new(schemas.IDsPara)
 	if err := c.ShouldBindJSON(ids); err != nil {
 		common.ErrorResponse(c, common.ParaErrMsg, err.Error())
 		return
 	}
-	count, err := dao.RestoreRecycle(ids)
+	uid = c.GetUint("userid")
+	count, err := dao.RestoreRecycle(uid, ids)
 	message := fmt.Sprintf("共恢复%d条数据", count)
-	common.ResSuccMsgJson(c, message, nil, err)
+	if err != nil {
+		common.ErrorResponse(c, "", err.Error())
+		return
+	}
+	common.SucessResponse(c, message, nil)
 }
 
 func RtorAllRecHandler(c *gin.Context) {
-	count, err := dao.RestoreAllRecycle()
+	var uid uint
+	uid = c.GetUint("userid")
+	count, err := dao.RestoreAllRecycle(uid)
 	message := fmt.Sprintf("共恢复%d条数据", count)
-	common.ResSuccMsgJson(c, message, nil, err)
+	if err != nil {
+		common.ErrorResponse(c, "", err.Error())
+		return
+	}
+	common.SucessResponse(c, message, nil)
 }
 
 func EmptyRecyHandler(c *gin.Context) {
+	var uid uint
 	ids := new(schemas.IDsPara)
 	if err := c.ShouldBindJSON(ids); err != nil {
 		common.ErrorResponse(c, common.ParaErrMsg, err.Error())
 		return
 	}
-	count, err := dao.EmptyRecycle(ids)
+	uid = c.GetUint("userid")
+	count, err := dao.EmptyRecycle(uid, ids)
 	message := fmt.Sprintf("彻底清空%d条数据", count)
-	common.ResSuccMsgJson(c, message, nil, err)
+	if err != nil {
+		common.ErrorResponse(c, "", err.Error())
+		return
+	}
+	common.SucessResponse(c, message, nil)
 }
 
 func EmptyAllRecyHandler(c *gin.Context) {
-	count, err := dao.EmptyAllRecycle()
+	var uid uint
+	uid = c.GetUint("userid")
+	count, err := dao.EmptyAllRecycle(uid)
 	message := fmt.Sprintf("彻底清空%d条数据", count)
-	common.ResSuccMsgJson(c, message, nil, err)
+	if err != nil {
+		common.ErrorResponse(c, "", err.Error())
+		return
+	}
+	common.SucessResponse(c, message, nil)
 }

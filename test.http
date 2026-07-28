@@ -2,25 +2,29 @@
 //review
 POST http://127.0.0.1:8080/v1/todo/review
 Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOjcsImV4cCI6MTc4NTMzMDIwMSwiaWF0IjoxNzg1MjQzODAxfQ.yO6dosPPsgV6VdZQGQisTFeH6LFtvg7F-bL6cKbzxlo
 
 {
-    "page":2
+    "page":1
 }
 
 ###
 //create
 POST http://127.0.0.1:8080/v1/todo
 Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOjcsImV4cCI6MTc4NTMzMDIwMSwiaWF0IjoxNzg1MjQzODAxfQ.yO6dosPPsgV6VdZQGQisTFeH6LFtvg7F-bL6cKbzxlo
 
 {
-    "title":"健身",
-    "status":true
+    "title":"sleep",
+    "status":false
 }
 
 ###
 //update
-PUT  http://127.0.0.1:8080/v1/todo/2
+PUT  http://127.0.0.1:8080/v1/todo/10
 Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOjcsImV4cCI6MTc4NTMzMDIwMSwiaWF0IjoxNzg1MjQzODAxfQ.yO6dosPPsgV6VdZQGQisTFeH6LFtvg7F-bL6cKbzxlo
+
 
 {   
     "title":"dance"
@@ -29,15 +33,17 @@ Accept: application/json
 ###
 DELETE http://127.0.0.1:8080/v1/todo/delete
 Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOjcsImV4cCI6MTc4NTMzMDIwMSwiaWF0IjoxNzg1MjQzODAxfQ.yO6dosPPsgV6VdZQGQisTFeH6LFtvg7F-bL6cKbzxlo
 
 {
-    "ids":[7,9]
+    "ids":[11,14]
 }
 
 ###
 //review recycle
 POST http://127.0.0.1:8080/v2/todo/review
 Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOjcsImV4cCI6MTc4NTMzMDIwMSwiaWF0IjoxNzg1MjQzODAxfQ.yO6dosPPsgV6VdZQGQisTFeH6LFtvg7F-bL6cKbzxlo
 
 {
     "page":2
@@ -47,20 +53,23 @@ Accept: application/json
 //restore little recycle
 PUT http://127.0.0.1:8080/v2/todo/recycle
 Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOjcsImV4cCI6MTc4NTMzMDIwMSwiaWF0IjoxNzg1MjQzODAxfQ.yO6dosPPsgV6VdZQGQisTFeH6LFtvg7F-bL6cKbzxlo
 
 {
-    "ids":[4]
+    "ids":[11]
 }
 
 ###
 //restore all recycle
 PUT http://127.0.0.1:8080/v2/todo/recycle/all
 Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOjcsImV4cCI6MTc4NTMzMDIwMSwiaWF0IjoxNzg1MjQzODAxfQ.yO6dosPPsgV6VdZQGQisTFeH6LFtvg7F-bL6cKbzxlo
 
 ###
 //empty little recycle
 DELETE  http://127.0.0.1:8080/v2/todo/empty
 Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOjcsImV4cCI6MTc4NTMzMDIwMSwiaWF0IjoxNzg1MjQzODAxfQ.yO6dosPPsgV6VdZQGQisTFeH6LFtvg7F-bL6cKbzxlo
 
 {
     "ids":[8]
@@ -70,3 +79,46 @@ Accept: application/json
 //empty all recycle
 DELETE  http://127.0.0.1:8080/v2/todo/empty/all
 Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOjcsImV4cCI6MTc4NTMzMDIwMSwiaWF0IjoxNzg1MjQzODAxfQ.yO6dosPPsgV6VdZQGQisTFeH6LFtvg7F-bL6cKbzxlo
+
+###
+//register
+POST http://127.0.0.1:8080/auth/register
+Accept: application/json
+
+{
+    "username":"admin",
+    "password":"123456"
+}
+
+###
+//login
+POST http://127.0.0.1:8080/auth/login
+Accept: application/json
+
+{
+    "username":"admin",
+    "password":"123456"
+}
+
+
+###
+//update pwd
+PUT http://127.0.0.1:8080/auth/modifypwd
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOjcsImV4cCI6MTc4NTMzMDIwMSwiaWF0IjoxNzg1MjQzODAxfQ.yO6dosPPsgV6VdZQGQisTFeH6LFtvg7F-bL6cKbzxlo
+
+{
+    "oldpwd":"123456",
+    "newpwd":"666666"
+}
+
+###
+//logout user
+DELETE  http://127.0.0.1:8080/auth/logout
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOjcsImV4cCI6MTc4NTMzMDIwMSwiaWF0IjoxNzg1MjQzODAxfQ.yO6dosPPsgV6VdZQGQisTFeH6LFtvg7F-bL6cKbzxlo
+
+{
+    "pwd":"666666"
+}

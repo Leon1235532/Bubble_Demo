@@ -12,6 +12,7 @@ var Conf = new(AppConfig)
 type AppConfig struct {
 	Release      bool `ini:"release"`
 	Port         int  `ini:"port"`
+	JwtSecret    string
 	*MySQLConfig `ini:"mysql"`
 }
 
@@ -31,5 +32,6 @@ func Init(file string) error {
 	}
 	Conf.User = os.Getenv("MYSQL_USER")
 	Conf.Password = os.Getenv("MYSQL_PASSWORD")
+	Conf.JwtSecret = os.Getenv("JWT_SECRET")
 	return nil
 }
