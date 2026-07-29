@@ -4,10 +4,10 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/Leon1235532/Bubble_Demo/auth"
-	"github.com/Leon1235532/Bubble_Demo/dao"
-	"github.com/Leon1235532/Bubble_Demo/models"
-	"github.com/Leon1235532/Bubble_Demo/schemas"
+	"github.com/Leon1235532/GoTask/auth"
+	"github.com/Leon1235532/GoTask/dao"
+	"github.com/Leon1235532/GoTask/models"
+	"github.com/Leon1235532/GoTask/schemas"
 	"gorm.io/gorm"
 )
 

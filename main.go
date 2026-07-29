@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/Leon1235532/Bubble_Demo/auth"
-	"github.com/Leon1235532/Bubble_Demo/dao"
-	"github.com/Leon1235532/Bubble_Demo/models"
-	"github.com/Leon1235532/Bubble_Demo/routers"
-	"github.com/Leon1235532/Bubble_Demo/setting"
+	"github.com/Leon1235532/GoTask/auth"
+	"github.com/Leon1235532/GoTask/dao"
+	"github.com/Leon1235532/GoTask/models"
+	"github.com/Leon1235532/GoTask/routers"
+	"github.com/Leon1235532/GoTask/setting"
 )
 
 const FilePath = "./config/config.ini"

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/Leon1235532/Bubble_Demo/setting"
+	"github.com/Leon1235532/GoTask/setting"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )

@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/Leon1235532/Bubble_Demo/models"
+	"github.com/Leon1235532/GoTask/models"
 	"gorm.io/gorm"
 )
 

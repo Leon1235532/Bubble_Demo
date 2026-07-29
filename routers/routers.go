@@ -1,7 +1,7 @@
 package routers
 
 import (
-	"github.com/Leon1235532/Bubble_Demo/setting"
+	"github.com/Leon1235532/GoTask/setting"
 	"github.com/gin-gonic/gin"
 )
 

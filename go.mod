@@ -1,4 +1,4 @@
-module github.com/Leon1235532/Bubble_Demo
+module github.com/Leon1235532/GoTask
 
 go 1.26.4
 

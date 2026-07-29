@@ -21,7 +21,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOjcsImV4c
 
 ###
 //update
-PUT  http://127.0.0.1:8080/v1/todo/10
+PUT  http://127.0.0.1:8080/v1/todo/16
 Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOjcsImV4cCI6MTc4NTMzMDIwMSwiaWF0IjoxNzg1MjQzODAxfQ.yO6dosPPsgV6VdZQGQisTFeH6LFtvg7F-bL6cKbzxlo
 
@@ -36,7 +36,7 @@ Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOjcsImV4cCI6MTc4NTMzMDIwMSwiaWF0IjoxNzg1MjQzODAxfQ.yO6dosPPsgV6VdZQGQisTFeH6LFtvg7F-bL6cKbzxlo
 
 {
-    "ids":[11,14]
+    "ids":[16]
 }
 
 ###
@@ -72,7 +72,7 @@ Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOjcsImV4cCI6MTc4NTMzMDIwMSwiaWF0IjoxNzg1MjQzODAxfQ.yO6dosPPsgV6VdZQGQisTFeH6LFtvg7F-bL6cKbzxlo
 
 {
-    "ids":[8]
+    "ids":[16]
 }
 
 ###
