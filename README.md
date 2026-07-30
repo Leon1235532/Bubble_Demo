@@ -2,7 +2,7 @@
 
 <div align="center">
 
-<h3 align="center">GoTask</h3>
+<h1 align="center">GoTask</h1>
 
   <p align="center">
     基于 Gin + GORM + JWT 的待办任务管理系统，支持用户鉴权与回收站机制
